@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 // Widget Imports
 import './providers/great_places.dart';
 import './screens/places_list_screen.dart';
+import './screens/add_place_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,8 +23,8 @@ class MyApp extends StatelessWidget {
                 title: 'Great Places',
                 debugShowCheckedModeBanner: false,
                 theme: CupertinoThemeData(
-                  primaryColor: Colors.white,
-                  primaryContrastingColor: CupertinoColors.systemIndigo,
+                  primaryColor: CupertinoColors.black,
+                  primaryContrastingColor: CupertinoColors.systemOrange,
                   barBackgroundColor: CupertinoColors.systemIndigo,
                   textTheme: CupertinoTextThemeData(
                     navTitleTextStyle: TextStyle(
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
                 initialRoute: '/',
                 routes: {
                   '/': (ctx) => PlacesListScreen(),
+                  AddPlaceScreen.routeName: (ctx) => AddPlaceScreen(),
                 },
               )
             : MaterialApp(
@@ -55,6 +57,7 @@ class MyApp extends StatelessWidget {
                 initialRoute: '/',
                 routes: {
                   '/': (ctx) => PlacesListScreen(),
+                  AddPlaceScreen.routeName: (ctx) => AddPlaceScreen(),
                 },
               ));
   }
