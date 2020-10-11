@@ -27,7 +27,7 @@ class FlatCupertinoIconButton extends StatelessWidget {
           ),
         ],
       ),
-      onPressed: () => onPressed,
+      onPressed: this.onPressed,
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../widgets/cupertino_icon_button.dart';
 import '../widgets/flat_cupertino_icon_button.dart';
@@ -15,6 +16,17 @@ class ImageInput extends StatefulWidget {
 
 class _ImageInputState extends State<ImageInput> {
   File _storedImage;
+  final picker = ImagePicker();
+
+  Future<void> _takePicture() async {
+    final imageFile = await picker.getImage(
+      source: ImageSource.camera,
+      maxWidth: 600,
+    );
+    setState(() {
+      _storedImage = File(imageFile.path);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +56,12 @@ class _ImageInputState extends State<ImageInput> {
         Expanded(
           child: Platform.isIOS
               ? FlatCupertinoIconButton(
-                  onPressed: () {},
+                  onPressed: _takePicture,
                   text: 'No picture taken',
                   icon: CupertinoIcons.photo_camera_solid,
                 )
               : FlatButton.icon(
-                  onPressed: () {},
+                  onPressed: _takePicture,
                   icon: Icon(Icons.camera),
                   label: Text('No picture taken'),
                   textColor: Theme.of(context).primaryColor,
