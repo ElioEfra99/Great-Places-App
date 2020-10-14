@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart' as syspaths;
 
 import '../widgets/cupertino_icon_button.dart';
 import '../widgets/flat_cupertino_icon_button.dart';
@@ -23,9 +25,15 @@ class _ImageInputState extends State<ImageInput> {
       source: ImageSource.camera,
       maxWidth: 600,
     );
+
     setState(() {
       _storedImage = File(imageFile.path);
     });
+
+    final appDir = await syspaths.getApplicationDocumentsDirectory();
+    final fileName = path.basename(imageFile.path);
+
+    final savedImage = await _storedImage.copy('${appDir.path}/$fileName');
   }
 
   @override
