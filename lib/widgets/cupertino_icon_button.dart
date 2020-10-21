@@ -27,7 +27,7 @@ class CupertinoIconButton extends StatelessWidget {
         ],
       ),
       color: CupertinoTheme.of(context).primaryContrastingColor,
-      onPressed: () => onPressed,
+      onPressed: onPressed,
     );
   }
 }

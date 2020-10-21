@@ -10,7 +10,9 @@ import '../widgets/cupertino_icon_button.dart';
 import '../widgets/flat_cupertino_icon_button.dart';
 
 class ImageInput extends StatefulWidget {
-  ImageInput({Key key}) : super(key: key);
+  final Function onSelectImage;
+
+  ImageInput(this.onSelectImage);
 
   @override
   _ImageInputState createState() => _ImageInputState();
@@ -26,6 +28,12 @@ class _ImageInputState extends State<ImageInput> {
       maxWidth: 600,
     );
 
+    print(imageFile);
+
+    if (imageFile == null) {
+      return;
+    }
+
     setState(() {
       _storedImage = File(imageFile.path);
     });
@@ -34,6 +42,7 @@ class _ImageInputState extends State<ImageInput> {
     final fileName = path.basename(imageFile.path);
 
     final savedImage = await _storedImage.copy('${appDir.path}/$fileName');
+    widget.onSelectImage(savedImage);
   }
 
   @override
@@ -65,13 +74,13 @@ class _ImageInputState extends State<ImageInput> {
           child: Platform.isIOS
               ? FlatCupertinoIconButton(
                   onPressed: _takePicture,
-                  text: 'No picture taken',
+                  text: 'Take a picture',
                   icon: CupertinoIcons.photo_camera_solid,
                 )
               : FlatButton.icon(
                   onPressed: _takePicture,
                   icon: Icon(Icons.camera),
-                  label: Text('No picture taken'),
+                  label: Text('Take a picture'),
                   textColor: Theme.of(context).primaryColor,
                 ),
         ),

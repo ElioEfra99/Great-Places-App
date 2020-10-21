@@ -1,12 +1,45 @@
 import 'dart:io';
 
+import 'package:cupertino_list_tile/cupertino_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/add_place_screen.dart';
+import '../providers/great_places.dart';
 
 class PlacesListScreen extends StatelessWidget {
   const PlacesListScreen({Key key}) : super(key: key);
+
+  Widget _buildGreatPlaceList() {
+    return Consumer<GreatPlaces>(
+      child: Center(
+        child: const Text('Got no places yes, start adding some!'),
+      ),
+      builder: (ctx, greatPlaces, ch) => greatPlaces.items.length <= 0
+          ? ch
+          : ListView.builder(
+              itemBuilder: (ctx, i) => Platform.isIOS
+                  ? CupertinoListTile(
+                      leading: Image.file(greatPlaces.items[i].image),
+                      title: Text(greatPlaces.items[i].title),
+                      onTap: () {
+                        // Go to detail screen
+                      },
+                    )
+                  : ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: FileImage(greatPlaces.items[i].image),
+                      ),
+                      title: Text(greatPlaces.items[i].title),
+                      onTap: () {
+                        // Go to detail screen ...
+                      },
+                    ),
+              itemCount: greatPlaces.items.length,
+            ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +55,8 @@ class PlacesListScreen extends StatelessWidget {
                       GestureDetector(
                         child: Icon(CupertinoIcons.add),
                         onTap: () {
-                          Navigator.of(context).pushNamed(AddPlaceScreen.routeName);
+                          Navigator.of(context)
+                              .pushNamed(AddPlaceScreen.routeName);
                         },
                       ),
                     ],
@@ -30,13 +64,9 @@ class PlacesListScreen extends StatelessWidget {
                 ),
               ];
             },
-            body: Center(
-              child: CupertinoActivityIndicator(),
-            ),
+            body: _buildGreatPlaceList(),
           )
-        : Center(
-            child: CircularProgressIndicator(),
-          );
+        : _buildGreatPlaceList();
 
     final pageBar = Platform.isIOS
         ? CupertinoNavigationBar(
