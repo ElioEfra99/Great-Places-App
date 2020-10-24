@@ -11,32 +11,42 @@ import '../providers/great_places.dart';
 class PlacesListScreen extends StatelessWidget {
   const PlacesListScreen({Key key}) : super(key: key);
 
-  Widget _buildGreatPlaceList() {
-    return Consumer<GreatPlaces>(
-      child: Center(
-        child: const Text('Got no places yes, start adding some!'),
-      ),
-      builder: (ctx, greatPlaces, ch) => greatPlaces.items.length <= 0
-          ? ch
-          : ListView.builder(
-              itemBuilder: (ctx, i) => Platform.isIOS
-                  ? CupertinoListTile(
-                      leading: Image.file(greatPlaces.items[i].image),
-                      title: Text(greatPlaces.items[i].title),
-                      onTap: () {
-                        // Go to detail screen
-                      },
-                    )
-                  : ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: FileImage(greatPlaces.items[i].image),
-                      ),
-                      title: Text(greatPlaces.items[i].title),
-                      onTap: () {
-                        // Go to detail screen ...
-                      },
+  Widget _buildGreatPlaceList(BuildContext context) {
+    return FutureBuilder(
+      future:
+          Provider.of<GreatPlaces>(context, listen: false).fetchAndSetPlaces(),
+      builder: (ctx, snapshot) => snapshot.connectionState ==
+              ConnectionState.waiting
+          ? Platform.isIOS
+              ? CupertinoActivityIndicator()
+              : Center(child: CircularProgressIndicator())
+          : Consumer<GreatPlaces>(
+              child: Center(
+                child: const Text('Got no places yes, start adding some!'),
+              ),
+              builder: (ctx, greatPlaces, ch) => greatPlaces.items.length <= 0
+                  ? ch
+                  : ListView.builder(
+                      itemBuilder: (ctx, i) => Platform.isIOS
+                          ? CupertinoListTile(
+                              leading: Image.file(greatPlaces.items[i].image),
+                              title: Text(greatPlaces.items[i].title),
+                              onTap: () {
+                                // Go to detail screen
+                              },
+                            )
+                          : ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage:
+                                    FileImage(greatPlaces.items[i].image),
+                              ),
+                              title: Text(greatPlaces.items[i].title),
+                              onTap: () {
+                                // Go to detail screen ...
+                              },
+                            ),
+                      itemCount: greatPlaces.items.length,
                     ),
-              itemCount: greatPlaces.items.length,
             ),
     );
   }
@@ -64,9 +74,9 @@ class PlacesListScreen extends StatelessWidget {
                 ),
               ];
             },
-            body: _buildGreatPlaceList(),
+            body: _buildGreatPlaceList(context),
           )
-        : _buildGreatPlaceList();
+        : _buildGreatPlaceList(context);
 
     final pageBar = Platform.isIOS
         ? CupertinoNavigationBar(
