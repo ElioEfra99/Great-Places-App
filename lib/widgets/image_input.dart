@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
 
-import '../widgets/cupertino_icon_button.dart';
 import '../widgets/flat_cupertino_icon_button.dart';
 
 class ImageInput extends StatefulWidget {
@@ -54,9 +53,10 @@ class _ImageInputState extends State<ImageInput> {
           height: 100,
           decoration: BoxDecoration(
             border: Border.all(
-                width: 1,
-                color:
-                    Platform.isIOS ? CupertinoColors.systemGrey2 : Colors.grey),
+              width: 1,
+              color: Platform.isIOS ? CupertinoColors.systemGrey2 : Colors.grey,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(25)),
           ),
           alignment: Alignment.center,
           child: _storedImage != null

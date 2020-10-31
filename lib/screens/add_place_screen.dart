@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../providers/great_places.dart';
 import '../widgets/image_input.dart';
 import '../widgets/cupertino_icon_button.dart';
-import '../widgets/image_input.dart';
+import '../widgets/location_input.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   static const routeName = '/add-place';
@@ -29,8 +29,9 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
       // Could show an error dialog
       return;
     }
-    
-    Provider.of<GreatPlaces>(context, listen: false).addPlace(_pickedImage, _titleController.text);
+
+    Provider.of<GreatPlaces>(context, listen: false)
+        .addPlace(_pickedImage, _titleController.text);
     Navigator.of(context).pop();
   }
 
@@ -56,6 +57,8 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                         ),
                   SizedBox(height: 10),
                   ImageInput(_selectImage),
+                  SizedBox(height: 10),
+                  LocationInput(),
                 ],
               ),
             ),

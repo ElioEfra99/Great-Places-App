@@ -41,6 +41,10 @@ class GreatPlaces with ChangeNotifier {
           ),
         )
         .toList();
+        print(_items[0].image);
+        print(_items[1].image);
+        print(_items[2].image);
+        print(_items[3].image);
     notifyListeners();
   }
 }

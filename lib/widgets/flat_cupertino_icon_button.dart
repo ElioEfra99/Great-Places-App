@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class FlatCupertinoIconButton extends StatelessWidget {
   FlatCupertinoIconButton(
@@ -11,23 +12,23 @@ class FlatCupertinoIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: CupertinoTheme.of(context).barBackgroundColor,
-          ),
-          SizedBox(width: 10),
-          Text(
-            text,
-            style: TextStyle(
-              color: CupertinoTheme.of(context).barBackgroundColor,
-            ),
-          ),
-        ],
+        child: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(
+        icon,
+        color: CupertinoTheme.of(context).barBackgroundColor,
       ),
-      onPressed: this.onPressed,
-    );
+      SizedBox(width: 10),
+      Text(
+        text,
+        style: TextStyle(
+          color: CupertinoTheme.of(context).barBackgroundColor,
+        ),
+      ),
+    ],
+        ),
+        onPressed: onPressed,
+      );
   }
 }
