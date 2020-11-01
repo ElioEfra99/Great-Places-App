@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 
 import '../widgets/flat_cupertino_icon_button.dart';
 
@@ -15,6 +16,12 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
 
+  Future<void> _getCurrentUserLocation() async {
+    final locData = await Location().getLocation();
+    print(locData.latitude);
+    print(locData.longitude);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,12 +31,12 @@ class _LocationInputState extends State<LocationInput> {
           width: double.infinity,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: Platform.isIOS ? CupertinoColors.systemGrey2 : Colors.grey,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(25))
-          ),
+              border: Border.all(
+                width: 1,
+                color:
+                    Platform.isIOS ? CupertinoColors.systemGrey2 : Colors.grey,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(25))),
           child: _previewImageUrl == null
               ? Text(
                   'No location chosen',
@@ -48,17 +55,17 @@ class _LocationInputState extends State<LocationInput> {
                 ? Flexible(
                     flex: 1,
                     child: FittedBox(
-                                          child: FlatCupertinoIconButton(
+                      child: FlatCupertinoIconButton(
                         icon: CupertinoIcons.location_fill,
                         text: 'Current Location',
-                        onPressed: () {},
+                        onPressed: _getCurrentUserLocation,
                       ),
                     ),
                   )
                 : Flexible(
                     flex: 1,
                     child: FlatButton.icon(
-                      onPressed: () {},
+                      onPressed: _getCurrentUserLocation,
                       icon: Icon(Icons.location_on),
                       label: Text('Current Location'),
                       textColor: Theme.of(context).primaryColor,
