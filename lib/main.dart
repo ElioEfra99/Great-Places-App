@@ -5,16 +5,15 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // Widget Imports
 import './providers/great_places.dart';
 import './screens/places_list_screen.dart';
 import './screens/add_place_screen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await FlutterConfig.loadEnvVariables();
+Future main() async {
+  await DotEnv().load('.env');
   runApp(MyApp());
 }
 

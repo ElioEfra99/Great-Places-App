@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
+import '../helpers/location_helper.dart';
 import '../widgets/flat_cupertino_icon_button.dart';
 import '../helpers/location_helper.dart';
 
@@ -19,11 +20,11 @@ class _LocationInputState extends State<LocationInput> {
 
   Future<void> _getCurrentUserLocation() async {
     final locData = await Location().getLocation();
+
     final staticMapImageURL = LocationHelper.generateLocationPreviousImage(
       latitude: locData.latitude,
       longitude: locData.longitude,
     );
-
     setState(() {
       _previewImageUrl = staticMapImageURL;
     });
